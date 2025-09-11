@@ -3,9 +3,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface AuthModel {
-	id: string;
+	_id: string;
 	email: string;
 	name: string;
+	accessToken: string;
+	role: 'teacher' | 'student' | 'admin';
+	refreshToken: string;
+	photoUrl?: string;
 }
 
 export interface AuthState {

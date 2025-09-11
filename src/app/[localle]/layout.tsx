@@ -2,6 +2,7 @@
 
 import { FooterComponent, HeaderComponent } from '@/components';
 import { locales } from '@/i18n';
+import Router from '@/routers/Router';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -15,15 +16,11 @@ export default async function LocaleLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const messages = await getMessages(); // có messages/vi.json & en.json
+	const messages = await getMessages();
 	return (
 		<NextIntlClientProvider messages={messages}>
 			<AntdRegistry>
-				<HeaderComponent />
-				<div className='main-container'>
-					<div className='container-fluid mt-5'>{children}</div>
-				</div>
-				<FooterComponent />
+				<Router children={children} />
 			</AntdRegistry>
 		</NextIntlClientProvider>
 	);

@@ -24,20 +24,19 @@ import queryString from 'query-string';
  */
 
 const axiosClient = axios.create({
-	// baseURL: 'http://192.168.1.42:3001', // base url server
+	baseURL: 'http://localhost:3001', // base url server
 	paramsSerializer: (params) => queryString.stringify(params),
 });
 
 axiosClient.interceptors.request.use(async (config: any) => {
 	const accesstoken = localStorage.getItem('accessToken');
 
-	// console.log(accesstoken);
 	config.headers = {
 		Authorization: accesstoken ? `Bearer ${accesstoken}` : '',
 		Accept: 'application/json',
 		...config.headers,
 	};
-	config.data;
+	config.data = config.data ? config.data : {};
 	return config;
 });
 
