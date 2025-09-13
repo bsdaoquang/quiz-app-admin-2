@@ -4,14 +4,15 @@
 
 import { API_NAMES } from '@/apis/apiNames';
 import handleAPI from '@/apis/handleAPI';
-import { FooterComponent, HeaderComponent } from '@/components';
+import { FooterComponent, HeaderComponent, SiderComponent } from '@/components';
 import { Login } from '@/screens';
 import {
 	addAuth,
 	AuthModel,
 	authSelector,
 } from '@/store/reducers/auth-reducer';
-import { Spin } from 'antd';
+import { themes } from '@/styles/themes';
+import { ConfigProvider, Layout, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -48,15 +49,20 @@ const Router = ({ children }: { children: React.ReactNode }) => {
 			<Spin />
 		</div>
 	) : auth && auth._id && auth.accessToken ? (
-		<>
-			<HeaderComponent />
-			<div className='main-container'>
-				<div className='container-fluid ' style={{ paddingTop: 80 }}>
-					{children}
-				</div>
-			</div>
-			<FooterComponent />
-		</>
+		<ConfigProvider theme={themes}>
+			<Layout style={{ minHeight: '100vh' }} className='bg-light'>
+				<SiderComponent />
+				<Layout>
+					<HeaderComponent />
+					<Layout.Content>
+						<div className='main-container'>
+							<div className='container-fluid'>{children}</div>
+						</div>
+					</Layout.Content>
+					<FooterComponent />
+				</Layout>
+			</Layout>
+		</ConfigProvider>
 	) : (
 		<Login />
 	);

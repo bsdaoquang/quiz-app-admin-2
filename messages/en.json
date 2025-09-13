@@ -14,5 +14,9 @@
 		"donateDescription": "If you find this application useful, please consider donating to support me so I can continue developing other open-source projects.",
 		"support": "Support",
 		"multiLanguages": "Multi Languages"
+	},
+	"HomeScreen": {
+		"title": "Home Screen",
+		"description": "This is the home screen of the application."
 	}
 }

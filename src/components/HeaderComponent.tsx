@@ -1,12 +1,14 @@
 /** @format */
 
+import { Affix, Layout, Typography } from 'antd';
+
 const HeaderComponent = () => {
 	return (
-		<nav className='navbar navbar-expand-lg p-2 navbar-light bg-white fixed-top'>
-			<a className='navbar-brand text-muted font-weight-bold' href='#'>
+		<Affix offsetTop={0}>
+			<Typography.Title level={3} className='m-0 px-2 py-3 bg-dark text-white'>
 				Header
-			</a>
-		</nav>
+			</Typography.Title>
+		</Affix>
 	);
 };
 

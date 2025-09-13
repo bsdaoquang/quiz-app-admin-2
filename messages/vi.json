@@ -14,5 +14,9 @@
 		"donateDescription": "Nếu bạn thấy ứng dụng này hữu ích, hãy cân nhắc ủng hộ tôi để tôi có thể tiếp tục phát triển các dự án mã nguồn mở khác.",
 		"support": "Hỗ trợ",
 		"multiLanguages": "Đa ngôn ngữ"
+	},
+	"HomeScreen": {
+		"title": "Màn hình chính",
+		"description": "Đây là màn hình chính của ứng dụng."
 	}
 }
