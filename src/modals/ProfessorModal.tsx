@@ -2,9 +2,20 @@
 
 // modal thêm/sửa giảng viên
 import { ProfessorModel } from '@/models/PropfesorModel';
-import { Form, message, Modal, Input, Select, Button, InputNumber } from 'antd';
-import React, { useEffect } from 'react';
+import {
+	Form,
+	message,
+	Modal,
+	Input,
+	Select,
+	Button,
+	InputNumber,
+	Divider,
+} from 'antd';
+import React, { useEffect, useState } from 'react';
 import { DEPARTMENT_OPTIONS, TITLE_OPTIONS } from '../models/PropfesorModel';
+import handleAPI from '@/apis/handleAPI';
+import { API_NAMES } from '@/apis/apiNames';
 
 interface ProfessorModalProps {
 	// props nếu cần
@@ -17,6 +28,8 @@ interface ProfessorModalProps {
 const ProfessorModal = (props: ProfessorModalProps) => {
 	const { visible, onClose, onSave, professorData } = props;
 
+	const [isLoading, setIsLoading] = useState(false);
+
 	const [messageApi, contextHolder] = message.useMessage();
 	const [form] = Form.useForm();
 
@@ -26,7 +39,20 @@ const ProfessorModal = (props: ProfessorModalProps) => {
 		}
 	}, [professorData, form]);
 
-	const handleSaveProfessor = async (values: any) => {};
+	const handleSaveProfessor = async (values: any) => {
+		setIsLoading(true);
+		try {
+			const res = await handleAPI(API_NAMES.professors.create, values, 'post');
+			messageApi.success('Lưu giảng viên thành công');
+			onSave(res);
+			handleClose();
+		} catch (error) {
+			console.log(error);
+			messageApi.error('Lỗi khi lưu giảng viên');
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	const handleClose = () => {
 		form.resetFields();
@@ -110,6 +136,19 @@ const ProfessorModal = (props: ProfessorModalProps) => {
 						</Form.Item>
 					</div>
 				</div>
+				<Form.Item label='Số năm kinh nghiệm' name='ageOfExperience'>
+					<InputNumber min={1} />
+				</Form.Item>
+				<Form.Item label='Tiểu sử' name='bio'>
+					<Input.TextArea rows={4} placeholder='Nhập tiểu sử' allowClear />
+				</Form.Item>
+				<Divider />
+				<Form.Item name={'username'} label='Tên đăng nhập'>
+					<Input placeholder='Nhập tên đăng nhập' allowClear />
+				</Form.Item>
+				<Form.Item name={'password'} label='Mật khẩu'>
+					<Input placeholder='Nhập mật khẩu' allowClear />
+				</Form.Item>
 			</Form>
 		</Modal>
 	);

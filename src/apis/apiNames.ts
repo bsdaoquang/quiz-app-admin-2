@@ -7,4 +7,8 @@ export const API_NAMES = {
 		profile: '/users/profile',
 		me: '/users/me',
 	},
+	questions: {},
+	professors: {
+		create: '/professors',
+	},
 };

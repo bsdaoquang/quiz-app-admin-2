@@ -1,16 +1,7 @@
 /** @format */
 
+import { AuthModel } from '@/models/AuthModel';
 import { createSlice } from '@reduxjs/toolkit';
-
-export interface AuthModel {
-	_id: string;
-	email: string;
-	name: string;
-	accessToken: string;
-	role: 'teacher' | 'student' | 'admin';
-	refreshToken: string;
-	photoUrl?: string;
-}
 
 export interface AuthState {
 	authData: AuthModel | null;

@@ -42,6 +42,7 @@ export interface ProfessorModel {
 	avatarUrl?: string;
 	createdAt: Date;
 	updatedAt: Date;
+	uid: string; // reference to User ID
 	isActive: boolean;
 	username: string;
 	ageOfExperience?: number; // in years

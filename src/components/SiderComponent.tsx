@@ -2,86 +2,53 @@
 
 'use client';
 
-import { Affix, Layout, Menu } from 'antd';
-import { useLocale } from 'next-intl';
-import { getLocale } from 'next-intl/server';
+import { AuthModel, Role } from '@/models/AuthModel';
+import { authSelector } from '@/store/reducers/auth-reducer';
+import { Affix, Layout, Menu, MenuProps } from 'antd';
+import { MenuItemType } from 'antd/es/menu/interface';
 import { useRouter } from 'next/navigation';
-import React from 'react';
-import { useTranslations } from 'use-intl';
+import { useSelector } from 'react-redux';
 
 const { Sider } = Layout;
+type MenuItem = Required<MenuProps>['items'][number];
 
 const SiderComponent = () => {
-	const l = useLocale(); // vi, en
+	// const l = useLocale(); // vi, en
 	const router = useRouter();
-	const t = useTranslations('HomeScreen');
+	// const t = useTranslations('HomeScreen');
+	const auth: AuthModel = useSelector(authSelector);
 
-	const menus =
-		l === 'vi'
-			? [
-					{
-						key: 'dashboard',
-						label: 'Bảng điều khiển',
-						path: '/bang-dieu-khien',
-					},
-					{
-						key: 'quizzes',
-						label: 'Bài kiểm tra',
-						path: '/bai-kiem-tra',
-					},
-					{
-						key: 'questions',
-						label: 'Câu hỏi',
-						path: '/cau-hoi',
-					},
-					{
-						key: 'students',
-						label: 'Học sinh',
-						path: '/hoc-sinh',
-					},
-					{
-						key: 'teachers',
-						label: 'Giảng viên',
-						path: '/giang-vien',
-					},
-					{
-						key: 'settings',
-						label: 'Cài đặt',
-						path: '/cai-dat',
-					},
-			  ]
-			: [
-					{
-						key: 'dashboard',
-						label: 'Dashboard',
-						path: '/dashboard',
-					},
-					{
-						key: 'quizzes',
-						label: 'Quizzes',
-						path: '/quizzes',
-					},
-					{
-						key: 'questions',
-						label: 'Questions',
-						path: '/questions',
-					},
-					{
-						key: 'students',
-						label: 'Students',
-						path: '/students',
-					},
-					{
-						key: 'teachers',
-						label: 'Teachers',
-						path: '/teachers',
-					},
-					{
-						key: 'settings',
-						label: 'Settings',
-						path: '/settings',
-					},
-			  ];
+	const isAdmin = auth && auth.role === Role.Admin;
+
+	const menus: MenuItem[] = [
+		{
+			key: '/',
+			label: 'Bảng điều khiển',
+			disabled: !isAdmin,
+		},
+		{
+			key: '/bai-kiem-tra',
+			label: 'Bài kiểm tra',
+		},
+		{
+			key: '/cau-hoi',
+			label: 'Câu hỏi',
+		},
+		{
+			key: '/hoc-sinh',
+			label: 'Học sinh',
+		},
+		{
+			key: '/giang-vien',
+			label: 'Giảng viên',
+			disabled: !isAdmin,
+		},
+		{
+			key: '/cai-dat',
+			label: 'Cài đặt',
+			disabled: !isAdmin,
+		},
+	];
 
 	return (
 		<Affix offsetTop={0}>
@@ -95,19 +62,12 @@ const SiderComponent = () => {
 				width={280}>
 				<Menu
 					onClick={(e) => {
-						// console.log('click ', e);
-						const menu = menus.find((menu) => menu.key === e.key);
-						if (menu) {
-							router.push(`${l}${menu.path}`);
-						}
+						router.push(e.key);
 					}}
 					theme='dark'
 					mode='inline'
 					style={{ height: '100%', borderRight: 0 }}
-					items={menus.map((menu) => ({
-						key: menu.key,
-						label: menu.label,
-					}))}
+					items={menus}
 				/>
 			</Sider>
 		</Affix>
