@@ -14,4 +14,6 @@ export interface AuthModel {
 	role: 'teacher' | 'student' | 'admin';
 	refreshToken: string;
 	photoUrl?: string;
+	isF2AEnabled?: boolean;
+	username?: string;
 }
