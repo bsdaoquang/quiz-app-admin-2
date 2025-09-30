@@ -12,7 +12,12 @@ export const API_NAMES = {
 	admin: {
 		createPermission: '/users/admin/create-permission',
 	},
-	questions: {},
+	questions: {
+		get: '/questions',
+		handleQuestions: '/questions',
+		manyQuestions: '/questions/many',
+		deleteMany: '/questions',
+	},
 	professors: {
 		index: '/professors',
 		create: '/professors',
