@@ -17,6 +17,8 @@ export const API_NAMES = {
 		handleQuestions: '/questions',
 		manyQuestions: '/questions/many',
 		deleteMany: '/questions',
+		getCategories: '/questions/categories',
+		category: '/questions/category',
 	},
 	professors: {
 		index: '/professors',

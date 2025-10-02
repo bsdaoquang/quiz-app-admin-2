@@ -8,8 +8,11 @@ import { QuestionModel } from '@/models/QuestionModel';
 import { ColumnProps } from 'antd/es/table';
 import React, { useEffect, useState } from 'react';
 
-import { Button, Modal, Table } from 'antd';
+import { Button, Flex, Modal, Table, Typography } from 'antd';
 import { API_NAMES } from '@/apis/apiNames';
+import { QuestionModal } from '@/modals';
+import { IoAdd } from 'react-icons/io5';
+import { PlusCircleFilled } from '@ant-design/icons';
 
 const Questions = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -24,11 +27,12 @@ const Questions = () => {
 	const [total, setTotal] = useState(0);
 	const [api, setApi] = useState('');
 	const [selectedKey, setSelectedKey] = useState<React.Key[]>([]);
+	const [isVisibleQuestionModal, setIsVisibleQuestionModal] = useState(false);
+	const [questionSelected, setQuestionSelected] = useState<QuestionModel>();
 
 	const [modalAPI, modalContext] = Modal.useModal();
 
 	useEffect(() => {
-		// setApi based on pageDatas
 		const { page, pageSize, search, category, createdBy } = pageDatas;
 		let url = `${API_NAMES.questions.get}?page=${page}&pageSize=${pageSize}`;
 		if (search) {
@@ -60,29 +64,6 @@ const Questions = () => {
 			setIsLoading(false);
 		}
 	};
-
-	/*
-		{
-    "_id": "68dc016aa5ef698030da4d30",
-    "question": "Cơ quan nào sản xuất hormone somatostatin?",
-    "options": [
-        "Tuyến tụy",
-        "Tuyến giáp",
-        "Tuyến yên",
-        "Tuyến thượng thận"
-    ],
-    "correctAnswer": "Tuyến tụy",
-    "categories": [
-        "Sinh lý học",
-        "Nội tiết"
-    ],
-    "note": "Somatostatin ức chế tiết hormone tăng trưởng và insulin.",
-    "photoUrl": "",
-    "__v": 0,
-    "createdAt": "2025-09-30T16:12:26.365Z",
-    "updatedAt": "2025-09-30T16:12:26.365Z"
-}
-	*/
 
 	const columns: ColumnProps<QuestionModel>[] = [
 		{
@@ -143,8 +124,23 @@ const Questions = () => {
 
 	return (
 		<div className='container'>
+			<div className='pt-3'>
+				<Flex justify='space-between'>
+					<div>
+						<Typography.Title level={4}>Quản lý câu hỏi</Typography.Title>
+					</div>
+					<div className='text-end'>
+						<Button
+							icon={<PlusCircleFilled />}
+							onClick={() => setIsVisibleQuestionModal(true)}
+							type='primary'>
+							Add new Question
+						</Button>
+					</div>
+				</Flex>
+			</div>
 			{modalContext}
-			<div className='py-4'>
+			<div className='pb-4'>
 				{selectedKey.length > 0 && (
 					<Button
 						type='text'
@@ -181,6 +177,18 @@ const Questions = () => {
 						setPageDatas({ ...pageDatas, page, pageSize }),
 				}}
 				rowKey='_id'
+			/>
+
+			<QuestionModal
+				visible={isVisibleQuestionModal}
+				onClose={() => {
+					setIsVisibleQuestionModal(false);
+					setQuestionSelected(undefined);
+				}}
+				question={questionSelected}
+				onFinish={(val) => {
+					console.log(val);
+				}}
 			/>
 		</div>
 	);

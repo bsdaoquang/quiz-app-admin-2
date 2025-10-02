@@ -21,3 +21,12 @@ export interface QuestionModel {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export interface CategoryModel {
+	name: string;
+	slug: string;
+	description?: string;
+	_id: string;
+	createdAt: Date;
+	updatedAt: Date;
+}

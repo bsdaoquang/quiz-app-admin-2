@@ -1,4 +1,7 @@
 /** @format */
 // This file is required to make this a module
 
-export {};
+import CategoryModal from './CategoryModal';
+import QuestionModal from './QuestionModal';
+
+export { QuestionModal, CategoryModal };
