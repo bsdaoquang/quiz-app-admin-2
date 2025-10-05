@@ -15,7 +15,7 @@ export interface QuestionModel {
 	categories: string[];
 	note?: string;
 	photoUrl?: string;
-	createdBy: string;
+	createdBy: CategoryModel[];
 	_id: string;
 	slug: string;
 	createdAt: Date;

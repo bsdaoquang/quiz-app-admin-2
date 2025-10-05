@@ -4,15 +4,23 @@
 'use client';
 
 import handleAPI from '@/apis/handleAPI';
-import { QuestionModel } from '@/models/QuestionModel';
+import { CategoryModel, QuestionModel } from '@/models/QuestionModel';
 import { ColumnProps } from 'antd/es/table';
 import React, { useEffect, useState } from 'react';
 
-import { Button, Flex, Modal, Table, Typography } from 'antd';
 import { API_NAMES } from '@/apis/apiNames';
 import { QuestionModal } from '@/modals';
-import { IoAdd } from 'react-icons/io5';
 import { PlusCircleFilled } from '@ant-design/icons';
+import {
+	Avatar,
+	Button,
+	Flex,
+	Modal,
+	Space,
+	Table,
+	Tag,
+	Typography,
+} from 'antd';
 
 const Questions = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -71,6 +79,13 @@ const Questions = () => {
 			render: (_, __, index) => index + 1,
 		},
 		{
+			title: 'Image',
+			dataIndex: 'photoUrl',
+			key: 'image',
+			render: (photoURL: string) =>
+				photoURL ? <Avatar size={40} src={photoURL} /> : <></>,
+		},
+		{
 			title: 'Câu hỏi',
 			dataIndex: 'question',
 			key: 'question',
@@ -93,7 +108,18 @@ const Questions = () => {
 			title: 'Danh mục',
 			dataIndex: 'categories',
 			key: 'categories',
-			render: (categories: string[]) => categories.join(', '),
+			render: (categories: CategoryModel[]) => (
+				<Space>
+					{categories.map((cat) => (
+						<Tag
+							style={{ cursor: 'pointer' }}
+							onClick={() => console.log(cat)}
+							key={cat._id}>
+							{cat.name}
+						</Tag>
+					))}
+				</Space>
+			),
 		},
 
 		{

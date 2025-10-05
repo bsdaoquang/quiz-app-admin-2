@@ -18,6 +18,8 @@ import {
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import CategoryModal from './CategoryModal';
+import { HandleFile } from '@/utils/handleFile';
+import { RcFile } from 'antd/es/upload';
 
 interface QuestionModalProps {
 	visible: boolean;
@@ -75,7 +77,7 @@ const QuestionModal = (props: QuestionModalProps) => {
 	}) => {
 		const data = {
 			...values,
-			photoUrl: '',
+			photoUrl: await HandleFile.Upload(filelists[0].originFileObj as RcFile),
 			// photoUrl: filelists[0] && filelists[0].originFileObj ? await uploadImage(filelists[0].originFileObj) : '',
 			id: question?._id,
 			categories: values.categories
@@ -221,6 +223,7 @@ const QuestionModal = (props: QuestionModalProps) => {
 					<Form.Item
 						name='correctAnswer'
 						label='Correct Answer'
+						className='m-0'
 						rules={[
 							{ required: true, message: 'Please enter correct answer' },
 						]}>

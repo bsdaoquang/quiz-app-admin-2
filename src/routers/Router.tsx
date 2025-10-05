@@ -6,11 +6,7 @@ import { API_NAMES } from '@/apis/apiNames';
 import handleAPI from '@/apis/handleAPI';
 import { FooterComponent, HeaderComponent, SiderComponent } from '@/components';
 import { Login } from '@/screens';
-import {
-	addAuth,
-	AuthModel,
-	authSelector,
-} from '@/store/reducers/auth-reducer';
+import { addAuth, authSelector } from '@/store/reducers/auth-reducer';
 import { themes } from '@/styles/themes';
 import { ConfigProvider, Layout, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -23,7 +19,7 @@ const Router = ({ children }: { children: React.ReactNode }) => {
 
 	const [isLoading, setIsLoading] = useState(true);
 
-	const auth: AuthModel = useSelector(authSelector);
+	const auth = useSelector(authSelector);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
