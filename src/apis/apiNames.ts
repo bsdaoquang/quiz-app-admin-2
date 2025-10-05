@@ -24,4 +24,12 @@ export const API_NAMES = {
 		index: '/professors',
 		create: '/professors',
 	},
+
+	tests: {
+		create: '/tests',
+		getAll: '/tests',
+		getById: (id: string) => `/tests/${id}`,
+		update: (id: string) => `/tests/${id}`,
+		delete: (id: string) => `/tests/${id}`,
+	},
 };
